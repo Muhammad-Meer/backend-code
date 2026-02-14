@@ -1,14 +1,14 @@
 const express = require('express');
 
 const app = express();
+app.use(express.json());
 
-// // Middleware
-// app.use(express.json());
 
-// // Test Route
-// app.get('/', (req, res) => {
-//   res.send('Server Running 🚀');
-// });
+app.post('/posts', async (req, res) => {
+  const data = req.body;
+  console.log(data);
+})
+
 
 module.exports = app;
 
