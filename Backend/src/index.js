@@ -14,3 +14,5 @@ app.post('/posts', upload.single('image'), async (req, res) => {
 
 module.exports = app;
 
+// mongodb+srv://muhabbatali:<db_password>@cluster0.fepov5t.mongodb.net/
+
