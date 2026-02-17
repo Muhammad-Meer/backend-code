@@ -1,9 +1,16 @@
-const expresss = require('express')
-const app = expresss()
+const express = require('express')
+const app = express()
 
-app.use(expresss.json());
+app.use(express.json());
 
-
-
+app.post('/create', async (req, res) => {
+  console.log(req.body)
+  res.status(200).json({
+    message: 'ok'
+  })
+  res.status(400).json({
+    message: 'error'
+  })
+})
 
 module.exports = app

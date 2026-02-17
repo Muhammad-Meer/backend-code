@@ -1,21 +1,11 @@
 const mongoose = require('mongoose')
 
-const scheema = new mongoose.scheema({
-  title: {
-    type: String,
-    required: true,
-  },
-  description: {
-    type: String,
-  }
-  
+const schema = new mongoose.Schema({
+  image: String,
+  caption: String,
 })
 
 
-const model = mongoose.model('details', scheema)
-
+const model = mongoose.model('deta', schema)
 
 module.exports = model
-
-
-
