@@ -12,6 +12,5 @@ app.post('/posts', upload.single('image'), async (req, res) => {
   res.send('ok')
 })
 
-
 module.exports = app;
 
