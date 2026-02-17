@@ -1,11 +1,6 @@
-const app = require('./src/index'); 
-const conectDB = require('./src/db');
+const app = require('./src/app')
 
 
-conectDB()
-
-const PORT = 3200;
-
-app.listen(PORT, () => {
-  console.log(`Server running at http://localhost:${PORT}`);
-});
+app.listen(3200, () => {
+  console.log("http://localhost:3200")
+})

@@ -1,8 +1,16 @@
-const mongosse = require('mongoose')
+const { default: mongoose } = require("mongoose");
+const mpngoose = require("mongoose");
 
-async function conectDB() {
-   await mongosse.connect('mongodb+srv://muhabbatali:zVqoJkgRl0U2kE9V@cluster0.fepov5t.mongodb.net/test')
-  console.log('db connected')
+async function connectDb() {
+   await mongoose
+    .connect(
+      "mongodb+srv://muhabbatali:zVqoJkgRl0U2kE9V@cluster0.fepov5t.mongodb.net/new",
+    )
+    .then(() => {console.log("db connected")})
+    .catch((err) => {
+      console.log(err);
+    });
 }
 
-module.exports = conectDB
+module.exports = connectDb;
+
