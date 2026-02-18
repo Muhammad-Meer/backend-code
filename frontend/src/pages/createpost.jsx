@@ -1,6 +1,6 @@
 import React from "react";
 
-const createpost = () => {
+const Createpost = () => {
   return (
     <>
       <section className="create-post-section">
@@ -10,11 +10,12 @@ const createpost = () => {
 
           <input type="text" placeholder="Enter post title" />
           <input type="text" placeholder="Enter post content" />
+          <button type="submit">Create Post</button>
         </form>
-        
+
       </section>
     </>
   );
 };
 
-export default createpost;
+export default Createpost;
