@@ -1,7 +1,20 @@
-import React from 'react'
+import React from "react";
 
-export const CreatePost = () => {
+const createpost = () => {
   return (
-    <div>Create Post</div>
-  )
-}
+    <>
+      <section className="create-post-section">
+        <h1>welcome create post page</h1>
+
+        <form>
+
+          <input type="text" placeholder="Enter post title" />
+          <input type="text" placeholder="Enter post content" />
+        </form>
+        
+      </section>
+    </>
+  );
+};
+
+export default createpost;
