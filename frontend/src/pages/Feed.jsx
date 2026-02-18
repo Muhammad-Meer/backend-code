@@ -2,7 +2,7 @@ import React, { useState } from "react";
 
 const Feed = () => {
   const [posts, setPosts] = useState([
-    { id: 1, image: "first post", caption: "this is content  __________________________________" },
+    { id: 1, image: "first post", caption: "this is content " },
 
   ]);
 
