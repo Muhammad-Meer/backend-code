@@ -13,4 +13,14 @@ app.post('/create', async (req, res) => {
   })
 })
 
+app.get('/create', async (req, res) => {
+  console.log(req.body)
+  res.status(200).json({
+    message: 'ok'
+  })
+  res.status(400).json({
+    message: 'error'
+  })
+})
+
 module.exports = app

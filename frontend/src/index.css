@@ -1,0 +1,26 @@
+body{
+    background-color: rgb(139, 136, 136);
+}
+.create-post-section{
+   display: flex;
+   flex-direction: column;
+   align-items: center;
+   justify-content: center;
+   height: 100%;
+   width: 100%;
+   background-color: rgb(175, 171, 167);
+}
+
+.create-post-section input,
+.create-post-section textarea{
+  width: 300px;
+  margin: 10px;
+  padding: 10px;
+  border: 1px solid #ccc;
+  border-radius: 4px;
+}
+
+.create-post-section button{
+  padding: 10px 20px;
+  background-color: #4caf50;
+}
