@@ -7,8 +7,9 @@ const Feed = () => {
   ]);
 
   return <>
-            <h1>welcome</h1>
+            
            <section className="feed-section">
+            <h1>welcome</h1>
             {
                posts.length > 0 ? (
                 posts.map((one) => (

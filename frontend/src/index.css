@@ -27,3 +27,19 @@ html {
   padding: 10px 20px;
   background-color: #4caf50;
 }
+
+.feed-section{
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  gap: 20px;
+  height: 100%;
+  width: 100%;
+  background-color: antiquewhite;
+}
+.post-card{
+  background-color:white;
+  border-radius: 8px;
+  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+}
