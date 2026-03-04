@@ -1,14 +1,12 @@
-const mongoose =  require('mongoose')
+const mongosse = require('mongoose')
 
 
-function conectDb() {
-  mongoose.connect('mongodb+srv://muhabbatali:myworldisstart@cluster0.fepov5t.mongodb.net/mern')
-  .then(() => {
-    console.log("mongo is coneected console")
-  })
-  .catch((err)=> {
-    console.log(err)
-  } )  
-  
+
+const conectDB = () => {
+  mongosse.connect(process.env.MONGO_URI)
+  .then(console.log("conected"))
+  .catch(console.log("some eroor"))
 }
-module.exports = conectDb
+
+
+module.exports = conectDB
