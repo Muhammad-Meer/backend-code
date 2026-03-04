@@ -41,7 +41,18 @@ async function userregister(req, res) {
 
   res.status(201).json({
     message: "user registered successfully",
+    user:{
+      _id: user._id,
+      email: email,
+      fullName: user.fullName
+    }
   });
 }
 
-module.exports = userregister;
+
+
+function userlogin(req , res)   {
+  
+}
+
+module.exports = {userregister, userlogin};

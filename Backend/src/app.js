@@ -1,9 +1,13 @@
-const express = require('express')
- require('dotenv').config();
+const express = require("express");
+const cookieparser = require("cookie-parser");
+const authroutes = require("../src/routes/auth.route");
+require("dotenv").config();
 
+const app = express();
 
-const app = express()
+app.use("api/auth", authroutes);
 
+app.use(express.json());
+app.use(cookieparser());
 
-
-module.exports = app
+module.exports = app;
