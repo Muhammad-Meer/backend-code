@@ -51,8 +51,35 @@ async function userregister(req, res) {
 
 
 
-function userlogin(req , res)   {
-  
+
+
+
+
+async function userlogin(req , res)   {
+  const {fullName, email, password} = req.body
+
+
+  const user = await usermodel.findOne({
+    email
+  })
+
+  if(!user) {
+    return res.status(400).json({
+      message: "user is not exist"
+    })
+  }
+
+  const ispasswordmetch = await bcrypt.compare(password, user.password);
+
+  if(!ispasswordmetch) {
+    return res.status(400).json({
+      message: "passwors is not metched"
+    })
+  }
+
+  const token = await jwt.sign({
+    id: user._id
+  })
 }
 
 module.exports = {userregister, userlogin};
