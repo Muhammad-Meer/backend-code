@@ -77,9 +77,20 @@ async function userlogin(req , res)   {
     })
   }
 
-  const token = await jwt.sign({
-    id: user._id
+  const token = jwt.sign({
+    id: user._id,
+  }, process.env.SECREATE)
+
+  res.cookie("mera token", token)
+
+
+  res.status(200).json({
+    message: "user is logined in",
+    deta: user
   })
 }
+
+
+
 
 module.exports = {userregister, userlogin};
