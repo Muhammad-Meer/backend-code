@@ -1,13 +1,15 @@
 const express = require("express");
-const cookieparser = require("cookie-parser");
-const authroutes = require("../src/routes/auth.route");
+const cookieParser = require("cookie-parser");
+const authRoutes = require("../src/routes/auth.route");
 require("dotenv").config();
 
 const app = express();
 
-app.use("api/auth", authroutes);
-
+// Middleware pehle
 app.use(express.json());
-app.use(cookieparser());
+app.use(cookieParser());
+
+// Routes
+app.use("/api/auth", authRoutes);
 
 module.exports = app;

@@ -28,3 +28,6 @@ const userschema = new mongose.Schema({
 
 
 const usermodel = mongose.model('userdata',userschema)
+
+
+module.exports = usermodel
