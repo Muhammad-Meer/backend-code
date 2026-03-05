@@ -8,7 +8,7 @@ async function userregister(req, res) {
 
   if (!fullName || !email || !password) {
     return res.status(400).json({
-      message: "all fields is required",
+      message: "all fields are required",
     });
   }
 
@@ -18,7 +18,7 @@ async function userregister(req, res) {
 
   if (emailisalreadyexist) {
     return res.status(400).json({
-      message: "email is already exist",
+      message: "email already exists",
     });
   }
 
@@ -34,63 +34,66 @@ async function userregister(req, res) {
     {
       id: user.id,
     },
-    process.env.SECREATE,
+    process.env.SECREATE
   );
 
   res.cookie("token", token);
 
   res.status(201).json({
     message: "user registered successfully",
-    user:{
+    user: {
       _id: user._id,
-      email: email,
-      fullName: user.fullName
-    }
+      email: user.email,
+      fullName: user.fullName,
+    },
   });
 }
 
+async function userlogin(req, res) {
+  try {
+    const { fullName, email, password } = req.body;
 
+    const user = await usermodel.findOne({
+      email,
+    });
 
+    if (!user) {
+      return res.status(400).json({
+        message: "Invalid email or password",
+      });
+    }
 
+    const ispasswordmatch = await bcrypt.compare(password, user.password);
 
+    if (!ispasswordmatch) {
+      return res.status(400).json({
+        message: "password is not matched",
+      });
+    }
 
+    const token = jwt.sign(
+      {
+        id: user._id,
+      },
+      process.env.SECREATE
+    );
 
-async function userlogin(req , res)   {
-  const {fullName, email, password} = req.body
+    res.cookie("meratoken", token);
 
-
-  const user = await usermodel.findOne({
-    email
-  })
-
-  if(!user) {
-    return res.status(400).json({
-      message: "user is not exist"
-    })
+    res.status(200).json({
+      id: user._id,
+      message: "user is logged in",
+      name: user.fullName,
+      email: user.email,
+    });
+  } catch (error) {
+    console.log(error);
   }
-
-  const ispasswordmetch = await bcrypt.compare(password, user.password);
-
-  if(!ispasswordmetch) {
-    return res.status(400).json({
-      message: "passwors is not metched"
-    })
-  }
-
-  const token = jwt.sign({
-    id: user._id,
-  }, process.env.SECREATE)
-
-  res.cookie("mera token", token)
-
-
-  res.status(200).json({
-    message: "user is logined in",
-    deta: user
-  })
 }
 
 
+async function logoutuser(req, res ) {
+  
+}
 
-
-module.exports = {userregister, userlogin};
+module.exports = { userregister, userlogin, logoutuser };
