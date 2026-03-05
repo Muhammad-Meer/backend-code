@@ -2,6 +2,7 @@ const usermodel = require("../models/user.model");
 const bcrypt = require("bcrypt");
 const jwt = require("jsonwebtoken");
 const cookie = require("cookie-parser");
+const foodpartnermodel = require('../models/food.partner')
 
 async function userregister(req, res) {
   const { fullName, email, password } = req.body;
@@ -92,8 +93,40 @@ async function userlogin(req, res) {
 }
 
 
-async function logoutuser(req, res ) {
+async function logoutuser(req, res) {
+  try {
+    res.clearCookie("token");  // correct function
+    res.status(200).json({
+      message: "User logged out successfully"
+    });
+  } catch (error) {
+    console.error("Logout Error:", error.message);
+    res.status(500).json({ message: "Server error" });
+  }
+}
+
+
+async function foodpartnerregister(req, res) {
+  const {neam, email, password} = req.body
   
+const isaccountexist = await foodpartnermodel.findOne({
+  email
+})
+
+if(isaccountexist) {
+  res.status(400).json({
+    message: "user is already exist"
+  })
+}
+
+const hashpassword = await bcrypt.hash(password, 10)
+
+const foodpartnercreate = await foodpartnermodel.create({
+   name,
+   email,
+   password: hashpassword
+})
+
 }
 
 module.exports = { userregister, userlogin, logoutuser };
