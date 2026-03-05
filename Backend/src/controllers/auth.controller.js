@@ -157,9 +157,15 @@ async function foodpartnerlogin(req, res) {
     })
     
 
-    const hashpassword = await bcrypt.hash(password, 10)
+    const ispasswordvalid = bcrypt.compare(password, foodpartnercreate.password)
 
-    
+    if(!ispasswordvalid) {
+      res.status(400).json({
+        
+      })
+    }
+
+
 
   }
 }
