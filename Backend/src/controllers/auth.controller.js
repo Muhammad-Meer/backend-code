@@ -107,7 +107,7 @@ async function logoutuser(req, res) {
 
 
 async function foodpartnerregister(req, res) {
-  const {neam, email, password} = req.body
+  const {neamm, email, password} = req.body
   
 const isaccountexist = await foodpartnermodel.findOne({
   email
@@ -122,11 +122,22 @@ if(isaccountexist) {
 const hashpassword = await bcrypt.hash(password, 10)
 
 const foodpartnercreate = await foodpartnermodel.create({
-   name,
+   neamm,
    email,
    password: hashpassword
 })
 
+
+   const token = jwt.sign({
+    id: foodpartnercreate._id
+   }, process.env.SECREATE)
+
+   res.cookie('token', token)
+
+
+   res.status(200).json({
+    
+   })
 }
 
 module.exports = { userregister, userlogin, logoutuser };

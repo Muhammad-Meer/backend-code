@@ -2,7 +2,7 @@ const mongoose = require('mongoose')
 
 
 const foodpartnescheema = new mongoose.Schema({
-  neam: {
+  neamm: {
 
     type: String,
     required: true,
