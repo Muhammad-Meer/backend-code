@@ -136,8 +136,31 @@ const foodpartnercreate = await foodpartnermodel.create({
 
 
    res.status(200).json({
-    
+    message: "foodpartner create successfully",
+    id: foodpartnercreate._id,
+    neamm: foodpartnercreate.neamm,
+    email: foodpartnercreate.email,
    })
 }
 
-module.exports = { userregister, userlogin, logoutuser };
+
+async function foodpartnerlogin(req, res) {
+  const {neamm, email, password} = req.body
+
+  const isaccountalreadyexist = await foodpartnerlogin.findOne({
+    email
+  })
+
+  if(!isaccountalreadyexist) {
+    res.status(400).json({
+      message: "user is not found"
+    })
+    
+
+    const hashpassword = await bcrypt.hash(password, 10)
+
+    
+
+  }
+}
+module.exports = { userregister, userlogin, logoutuser, foodpartnerregister };
