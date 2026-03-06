@@ -1,8 +1,11 @@
 const usermodel = require("../models/user.model");
 const bcrypt = require("bcrypt");
 const jwt = require("jsonwebtoken");
-const cookie = require("cookie-parser");
+const cookieParser = require("cookie-parser");
 const foodpartnermodel = require('../models/food.partner')
+
+
+// user register api
 
 async function userregister(req, res) {
   const { fullName, email, password } = req.body;
@@ -50,9 +53,13 @@ async function userregister(req, res) {
   });
 }
 
+
+
+// // user login api
+
 async function userlogin(req, res) {
   try {
-    const { fullName, email, password } = req.body;
+    const {  email, password } = req.body;
 
     const user = await usermodel.findOne({
       email,
@@ -93,6 +100,9 @@ async function userlogin(req, res) {
 }
 
 
+
+// user loogout api
+
 async function logoutuser(req, res) {
   try {
     res.clearCookie("token");  // correct function
@@ -106,6 +116,9 @@ async function logoutuser(req, res) {
 }
 
 
+// food-partner register api
+
+
 async function foodpartnerregister(req, res) {
   const {neamm, email, password} = req.body
   
@@ -113,9 +126,16 @@ const isaccountexist = await foodpartnermodel.findOne({
   email
 })
 
+  if (!neamm|| !email || !password) {
+    return res.status(400).json({
+      message: "all fields are required",
+    });
+  }
+
+
 if(isaccountexist) {
-  res.status(400).json({
-    message: "user is already exist"
+  return res.status(400).json({
+    message: "user already exists"
   })
 }
 
@@ -144,29 +164,56 @@ const foodpartnercreate = await foodpartnermodel.create({
 }
 
 
+//  food-partner login api
+
+
 async function foodpartnerlogin(req, res) {
   const {neamm, email, password} = req.body
 
-  const isaccountalreadyexist = await foodpartnerlogin.findOne({
-    email
-  })
+const isaccountalreadyexist = await foodpartnermodel.findOne({
+  email
+})
 
   if(!isaccountalreadyexist) {
     res.status(400).json({
       message: "user is not found"
     })
-    
+      }
 
-    const ispasswordvalid = bcrypt.compare(password, foodpartnercreate.password)
+
+    const ispasswordvalid = await bcrypt.compare(password, isaccountalreadyexist.password)
 
     if(!ispasswordvalid) {
       res.status(400).json({
-        
+        message: "password is not valid"
       })
     }
 
+    const token = jwt.sign({
+id: isaccountalreadyexist._id,
+    }, process.env.SECREATE)
 
+    res.cookie("token", token)
 
-  }
+    res.status(200).json({
+      message: "foodpartner loogedin successfully"
+    })
+
 }
-module.exports = { userregister, userlogin, logoutuser, foodpartnerregister };
+
+// food-partner logout api
+
+    function foodpartnerlogout(req , res) {
+      res.clearCookie("token")
+      res.status(200).json({
+        message: "user loogout successfully"
+      })
+    }
+module.exports = { 
+  userregister, 
+  userlogin, 
+  logoutuser, 
+  foodpartnerregister,
+  foodpartnerlogin,
+  foodpartnerlogout
+};
