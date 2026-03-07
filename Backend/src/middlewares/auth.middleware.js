@@ -23,4 +23,4 @@ async function authfoodmiddleeare(req, res, next) {
   }
 }
 
-module.exports = authfoodmiddleeare
+module.exports = {authfoodmiddleeare}
