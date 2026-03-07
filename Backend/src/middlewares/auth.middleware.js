@@ -10,4 +10,16 @@ async function authfoodmiddleeare(req , res , next ) {
        message: "plese first login"
     })
   }
+
+  try {
+      const decoded =   jwt.verify(token, process.env.SECREATE)
+      const foodpartner = await foodmodel.findById({
+        
+      })
+  } catch (error) {
+     
+    return res.status(401).json({
+      message: "invalild token "
+    })
+  }
 }  
