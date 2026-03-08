@@ -1,6 +1,27 @@
 const mongoose = require('mongoose')
 
 
-const registeruser = (req, res) => {
+const registeruserscheema = mongoose.Schema({
+  fullneam:{
 
-}
+    type: String,
+    required: true
+  },
+  
+  email:{
+
+    type: String,
+    required: true,
+    unique: true,
+  },
+
+  password:{
+
+    type: String,
+    required: true
+  },
+})
+
+const registerusermodel = mongoose.model("user",registeruserscheema)
+
+module.exports = registerusermodel
