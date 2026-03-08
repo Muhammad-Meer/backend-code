@@ -1,7 +1,7 @@
 const mongoose = require('mongoose')
 
 
-const registeruserscheema = mongoose.Schema({
+const registeruserscheema = new  mongoose.Schema({
   fullneam:{
 
     type: String,
