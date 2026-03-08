@@ -120,6 +120,9 @@ async function logoutuser(req, res) {
 
 
 async function foodpartnerregister(req, res) {
+
+  try {
+    
   const {neamm, email, password} = req.body
   
 const isaccountexist = await foodpartnermodel.findOne({
@@ -161,6 +164,10 @@ const foodpartnercreate = await foodpartnermodel.create({
     neamm: foodpartnercreate.neamm,
     email: foodpartnercreate.email,
    })
+
+     } catch (error) {
+    console.log(error)
+  }
 }
 
 
@@ -174,11 +181,10 @@ const isaccountalreadyexist = await foodpartnermodel.findOne({
   email
 })
 
-  if(!isaccountalreadyexist) {
-    res.status(400).json({
-      message: "user is not found"
-    })
-      }
+if (!isaccountalreadyexist) {
+  return res.status(404).json({ message: "User not found" });
+}
+ 
 
 
     const ispasswordvalid = await bcrypt.compare(password, isaccountalreadyexist.password)
