@@ -40,65 +40,64 @@ const registeruser = async (req, res) => {
 
     res.cookie("token", token);
 
-
     res.status(201).json({
       message: "usrer create successfully",
       fullneam: user.fullneam,
       email: user.email,
-      password: hashedpassword
-    })
-
+      password: hashedpassword,
+    });
   } catch (error) {
     console.log(error);
   }
 };
 
+const loginuser = async (req, res) => {
+  const { fullneam, email, password } = req.body;
 
+  const user = await registerusermodel.findOne({
+    email,
+  });
 
-   const loginuser =  async (req , res) => {  
-
-    const {  email, password } = req.body;
-
-    const user = await registerusermodel.findOne({
-      email
-    })
-
-    if(!user) {
-      return res.status(400).json({
-        message: "invalid email or password"
-      })
-    }
-
-
-    const ispasswordismatched = await bcrypt.compare(password, user.password)
-
-
-    if(ispasswordismatched) {
-      return res.status(400).json({
-        message: "invalid email and password"
-      })
-    }
-
-    const token = jwt.sign({
-      id: user._id,
-    },process.env.SECREATE)
-
-    res.cookie("token", token)
-
-
-    res.status(200).json({
-      message: "user looged in successfully",
-      user: {
-
-        _id: user._id,
-        email: user.email,
-        fullneam: user.fullneam
-      
-      }
-
-    })
+  if (!user) {
+    return res.status(400).json({
+      message: "invalid email or password",
+    });
   }
 
+  const ispasswordismatched = await bcrypt.compare(password, user.password);
+
+  if (!ispasswordismatched) {
+    return res.status(400).json({
+      message: "invalid email or password",
+    });
+  }
+
+  const token = jwt.sign(
+    {
+      id: user._id,
+    },
+    process.env.SECREATE,
+  );
+
+  res.cookie("token", token);
+
+  res.status(200).json({
+    message: "user looged in successfully",
+    user: {
+      _id: user._id,
+      email: user.email,
+      fullneam: user.fullneam,
+    },
+  });
+};
 
 
-module.exports = { registeruser, loginuser };
+
+function logoutuser(req , res) {
+     res.clearcookie("token");
+     res.status(200).json({
+      message: ""
+     })
+}
+
+module.exports = { registeruser, loginuser , logoutuser};
