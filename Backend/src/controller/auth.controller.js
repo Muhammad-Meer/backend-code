@@ -1,6 +1,9 @@
 const registerusermodel = require("../models/auth.model");
+const foodpartnermodel = require("../models/food.partner.model");
 const bcrypt = require("bcrypt");
 const jwt = require("jsonwebtoken");
+
+// register  user api
 
 const registeruser = async (req, res) => {
   try {
@@ -51,6 +54,8 @@ const registeruser = async (req, res) => {
   }
 };
 
+// login  user api
+
 const loginuser = async (req, res) => {
   const { fullneam, email, password } = req.body;
 
@@ -91,13 +96,72 @@ const loginuser = async (req, res) => {
   });
 };
 
+// logout  user api
 
-
-function logoutuser(req , res) {
-     res.clearcookie("token");
-     res.status(200).json({
-      message: ""
-     })
+function logoutuser(req, res) {
+  res.clearcookie("token");
+  res.status(200).json({
+    message: "",
+  });
 }
 
-module.exports = { registeruser, loginuser , logoutuser};
+
+// foodpartner   register api
+
+async function registerfoodpartner(req, res) {
+  try {
+    const { fullneam, email, password } = req.body;
+
+    if (!fullneam || !email || !password) {
+      return res.status(400).json({
+        message: "everything is required",
+      });
+    }
+
+
+    const isemailisexixt = foodpartnermodel.findOne({
+      email,
+    });
+
+    if (isemailisexixt) {
+      return res.status(400).json({
+        message: "user is already exist",
+      });
+    }
+    
+
+      const hashpassword = bcrypt.hash(password , 10)
+
+      const user = await foodpartnermodel.create({
+        fullneam,
+        email,
+        password: hashpassword
+      })
+
+      const token = jwt.sign({
+        id: user._id,
+      }, process.env.SECREATE)
+
+      res.cookie("token", token)
+
+
+
+      res.status(200).json({
+        message: "foodpartner loged in successfully",
+        foodpartner: {
+         fullneam: user.fullneam,
+         email: user.email,
+         password: hashpassword
+        }
+      })
+
+  } catch (error) {
+    console.log(error);
+  }
+}
+
+module.exports = { registeruser,
+   loginuser,
+    logoutuser,
+  registerfoodpartner,
+ };
