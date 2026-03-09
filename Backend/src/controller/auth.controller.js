@@ -99,7 +99,7 @@ const loginuser = async (req, res) => {
 // logout  user api
 
 function logoutuser(req, res) {
-  res.clearcookie("token");
+  res.clearCookie("token");
   res.status(200).json({
     message: "",
   });
@@ -130,7 +130,6 @@ async function registerfoodpartner(req, res) {
     const user = await foodpartnermodel.create({
       fullneam: fullneam,
       email: email,
-      password: hashpassword
     });
 
     const token = jwt.sign(
