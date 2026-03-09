@@ -43,11 +43,26 @@ const registeruser = async (req, res) => {
 
     res.status(201).json({
       message: "usrer create successfully",
-      user: user
+      fullneam: user.fullneam,
+      email: user.email,
+      password: hashedpassword
     })
+
   } catch (error) {
     console.log(error);
   }
 };
 
-module.exports = { registeruser };
+
+
+   const loginuser = (req , res) => {  
+
+    const { fullneam, email, password } = req.body;
+
+    
+
+   }
+
+
+
+module.exports = { registeruser, loginuser };
