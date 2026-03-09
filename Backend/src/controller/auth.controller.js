@@ -107,7 +107,6 @@ function logoutuser(req, res) {
 
 
 // foodpartner   register api
-
 async function registerfoodpartner(req, res) {
   try {
     const { fullneam, email, password } = req.body;
@@ -118,48 +117,43 @@ async function registerfoodpartner(req, res) {
       });
     }
 
-
-    const isemailisexixt = foodpartnermodel.findOne({
-      email,
-    });
+    const isemailisexixt = await foodpartnermodel.findOne({ email });
 
     if (isemailisexixt) {
       return res.status(400).json({
-        message: "user is already exist",
+        message: "user already exists",
       });
     }
-    
 
-      const hashpassword = bcrypt.hash(password , 10)
+    const hashpassword = await bcrypt.hash(password, 10);
 
-      const user = await foodpartnermodel.create({
-        fullneam,
-        email,
-        password: hashpassword
-      })
+    const user = await foodpartnermodel.create({
+      fullneam: fullneam,
+      email: email,
+      password: hashpassword
+    });
 
-      const token = jwt.sign({
-        id: user._id,
-      }, process.env.SECREATE)
+    const token = jwt.sign(
+      { id: user._id },
+      process.env.JWT_SECRET
+    );
 
-      res.cookie("token", token)
+    res.cookie("token", token, {
+      httpOnly: true
+    });
 
-
-
-      res.status(200).json({
-        message: "foodpartner loged in successfully",
-        foodpartner: {
-         fullneam: user.fullneam,
-         email: user.email,
-         password: hashpassword
-        }
-      })
+    res.status(201).json({
+      message: "foodpartner registered successfully",
+      foodpartner: {
+        fullneam: user.fullneam,
+        email: user.email
+      }
+    });
 
   } catch (error) {
     console.log(error);
   }
 }
-
 
 
    
