@@ -12,8 +12,8 @@ router.get('/user/logout',registeruser.logoutuser)
 
 
 router.post('/food-partner-register',registeruser.registerfoodpartner)
-router.post('/food-partner-login',registeruser.)
-router.get('/food-partner-logout',registeruser.)
+// router.post('/food-partner-login',registeruser.)
+// router.get('/food-partner-logout',registeruser.)
 
 
 

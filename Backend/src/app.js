@@ -12,6 +12,7 @@ app.use(cookieparser())
 
 
 app.use('/api/auth',authrouter)
+app.use('/',authrouter)
 
 
 

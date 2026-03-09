@@ -160,6 +160,9 @@ async function registerfoodpartner(req, res) {
   }
 }
 
+
+
+   
 module.exports = { registeruser,
    loginuser,
     logoutuser,
