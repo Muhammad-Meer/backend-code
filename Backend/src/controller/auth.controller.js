@@ -47,7 +47,6 @@ const registeruser = async (req, res) => {
       message: "usrer create successfully",
       fullneam: user.fullneam,
       email: user.email,
-      password: hashedpassword,
     });
   } catch (error) {
     console.log(error);
@@ -57,7 +56,7 @@ const registeruser = async (req, res) => {
 // login  user api
 
 const loginuser = async (req, res) => {
-  const { fullneam, email, password } = req.body;
+  const { email, password } = req.body;
 
   const user = await registerusermodel.findOne({
     email,
@@ -101,7 +100,7 @@ const loginuser = async (req, res) => {
 function logoutuser(req, res) {
   res.clearCookie("token");
   res.status(200).json({
-    message: "",
+    message: "user logged out",
   });
 }
 
@@ -121,7 +120,7 @@ async function registerfoodpartner(req, res) {
 
     if (isemailisexixt) {
       return res.status(400).json({
-        message: "user already exists",
+        message: "food-partner  is already exists",
       });
     }
 
@@ -130,13 +129,12 @@ async function registerfoodpartner(req, res) {
     const user = await foodpartnermodel.create({
       fullneam: fullneam,
       email: email,
-      password: hashpassword
+      password: hashpassword,
     });
 
     const token = jwt.sign({ id: user._id }, process.env.SECREATE);
 
-    res.cookie("token", token, {
-    });
+    res.cookie("token", token);
 
     res.status(201).json({
       message: "foodpartner registered successfully",
@@ -150,40 +148,70 @@ async function registerfoodpartner(req, res) {
   }
 }
 
-
 // foodpartner   login api
 async function loginfoodpartner(req, res) {
+
+  try {
+    
+
   const { email, password } = req.body;
 
-
   const user = await foodpartnermodel.findOne({
-    email
-  })
+    email,
+  });
 
-  if(!user) {
-       return res.status(400).json({
-        message:  "email password is invalid"
-       })
+  if (!user) {
+    return res.status(400).json({
+      message: "email password is invalid",
+    });
   }
 
-   const ispasswordismatched =bcrypt.compare(password , user.password)
+  const ispasswordismatched = await bcrypt.compare(password, user.password);
 
-
-   if(!ispasswordismatched) {
+  if (!ispasswordismatched) {
     return res.status(400).json({
-      message: "invalid email and password"
-    })
-   }
+      message: "invalid email and password",
+    });
+  }
+
+  const token = jwt.sign(
+    {
+      id: user._id,
+    },
+    process.env.SECREATE,
+  );
+
+  res.cookie("token", token);
 
 
-   const token = jwt.sign({
+  res.status(200).json({
+  message: "foodpartner login successful",
+  foodpartner: {
     id: user._id,
-   },process.env.SECREATE)
+    email: user.email,
+    fullneam: user.fullneam
+  }
+});
+
+  } catch (error) {
+    console.log(error)
+  }
 }
 
-module.exports = { 
+// foodpartner   logout api
+
+async function logoutfoodpartner(req, res) {
+  res.clearCookie("token");
+  res.status(200).json({
+    message: "food-partner is loogout",
+  });
+}
+
+module.exports = {
   registeruser,
-  loginuser, logoutuser,
+  loginuser,
+  logoutuser,
   registerfoodpartner,
- loginfoodpartner,
-   };
+  loginfoodpartner,
+  logoutfoodpartner,
+};
