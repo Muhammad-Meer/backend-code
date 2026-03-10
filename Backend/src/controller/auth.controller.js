@@ -132,7 +132,7 @@ async function registerfoodpartner(req, res) {
       password: hashpassword
     });
 
-    const token = jwt.sign({ id: user._id }, process.env.JWT_SECREATE);
+    const token = jwt.sign({ id: user._id }, process.env.SECREATE);
 
     res.cookie("token", token, {
     });
