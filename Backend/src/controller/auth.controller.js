@@ -105,7 +105,6 @@ function logoutuser(req, res) {
   });
 }
 
-
 // foodpartner   register api
 async function registerfoodpartner(req, res) {
   try {
@@ -132,32 +131,35 @@ async function registerfoodpartner(req, res) {
       email: email,
     });
 
-    const token = jwt.sign(
-      { id: user._id },
-      process.env.JWT_SECRET
-    );
+    const token = jwt.sign({ id: user._id }, process.env.JWT_SECRET);
 
     res.cookie("token", token, {
-      httpOnly: true
+      httpOnly: true,
     });
 
     res.status(201).json({
       message: "foodpartner registered successfully",
       foodpartner: {
         fullneam: user.fullneam,
-        email: user.email
-      }
+        email: user.email,
+      },
     });
-
   } catch (error) {
     console.log(error);
   }
 }
 
+async function loginfoodpartner(req, res) {
+  const { email, password } = req.body;
 
-   
-module.exports = { registeruser,
-   loginuser,
-    logoutuser,
-  registerfoodpartner,
- };
+
+  const user = await foodpartnermodel.findOne({
+    email
+  })
+
+  if(!user) {
+    
+  }
+}
+
+module.exports = { registeruser, loginuser, logoutuser, registerfoodpartner };
