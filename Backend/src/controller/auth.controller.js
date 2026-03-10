@@ -158,8 +158,14 @@ async function loginfoodpartner(req, res) {
   })
 
   if(!user) {
-    
+       return res.status(400).json({
+        message:  "email password is invalid"
+       })
   }
 }
 
-module.exports = { registeruser, loginuser, logoutuser, registerfoodpartner };
+module.exports = { registeruser,
+   loginuser, logoutuser,
+    registerfoodpartner,
+    loginfoodpartner,
+   };
