@@ -129,12 +129,12 @@ async function registerfoodpartner(req, res) {
     const user = await foodpartnermodel.create({
       fullneam: fullneam,
       email: email,
+      password: hashpassword
     });
 
-    const token = jwt.sign({ id: user._id }, process.env.JWT_SECRET);
+    const token = jwt.sign({ id: user._id }, process.env.JWT_SECREATE);
 
     res.cookie("token", token, {
-      httpOnly: true,
     });
 
     res.status(201).json({
@@ -164,8 +164,9 @@ async function loginfoodpartner(req, res) {
   }
 }
 
-module.exports = { registeruser,
-   loginuser, logoutuser,
-    registerfoodpartner,
-    loginfoodpartner,
+module.exports = { 
+  registeruser,
+  loginuser, logoutuser,
+  registerfoodpartner,
+ loginfoodpartner,
    };
