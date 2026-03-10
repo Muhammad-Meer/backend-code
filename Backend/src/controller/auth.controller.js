@@ -106,6 +106,7 @@ function logoutuser(req, res) {
 }
 
 // foodpartner   register api
+
 async function registerfoodpartner(req, res) {
   try {
     const { fullneam, email, password } = req.body;
@@ -149,6 +150,8 @@ async function registerfoodpartner(req, res) {
   }
 }
 
+
+// foodpartner   login api
 async function loginfoodpartner(req, res) {
   const { email, password } = req.body;
 
@@ -162,6 +165,20 @@ async function loginfoodpartner(req, res) {
         message:  "email password is invalid"
        })
   }
+
+   const ispasswordismatched =bcrypt.compare(password , user.password)
+
+
+   if(!ispasswordismatched) {
+    return res.status(400).json({
+      message: "invalid email and password"
+    })
+   }
+
+
+   const token = jwt.sign({
+    id: user._id,
+   },process.env.SECREATE)
 }
 
 module.exports = { 
