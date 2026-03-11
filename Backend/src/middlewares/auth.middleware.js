@@ -15,7 +15,7 @@ async function authfoodpartnermiddleware(req, res, next) {
 
   const food = await foodpartnermodel.findOne(decoded.id)
 
-    req.foodpartner = food
+    req.foodpartner = foodpartner
   next()
 
 
