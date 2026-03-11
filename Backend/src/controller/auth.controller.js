@@ -7,13 +7,13 @@ const jwt = require("jsonwebtoken");
 
 const registeruser = async (req, res) => {
   try {
-    const { fullneam, email, password } = req.body;
+   const { fullneam, email, password } = req.body;
 
-    if (!fullneam || !email || !password) {
-      return res.status(400).json({
-        message: "everything is required",
-      });
-    }
+if (!fullneam || !email || !password) {
+  return res.status(400).json({
+    message: "everything is required",
+  });
+}
 
     const isemailalreadyexist = await registerusermodel.findOne({
       email,
@@ -126,8 +126,8 @@ async function registerfoodpartner(req, res) {
     const hashpassword = await bcrypt.hash(password, 10);
 
     const user = await foodpartnermodel.create({
-      fullneam: fullneam,
-      email: email,
+      fullneam,
+      email,
       password: hashpassword,
     });
 
@@ -195,6 +195,7 @@ async function loginfoodpartner(req, res) {
     console.log(error)
   }
 }
+
 // foodpartner   logout api
 
 async function logoutfoodpartner(req, res) {

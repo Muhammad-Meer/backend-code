@@ -3,7 +3,7 @@ const mongoose = require('mongoose')
 
 const registeruserscheema = new  mongoose.Schema({
   fullneam:{
-
+  
     type: String,
     required: true
   },

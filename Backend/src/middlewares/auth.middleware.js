@@ -6,25 +6,30 @@ async function authfoodpartnermiddleware(req, res, next) {
 
   if (!token) {
     return res.status(401).json({
-      message: "unauthorized access plese logon first",
+      message: "unauthorized access, please login first",
     });
   }
 
   try {
     const decoded = jwt.verify(token, process.env.SECREATE);
 
-  const food = await foodpartnermodel.findOne(decoded.id)
+    // findById use karen
+    const foodpartner = await foodpartnermodel.findById(decoded.id);
 
-    req.foodpartner = foodpartner
-  next()
+    if (!foodpartner) {
+      return res.status(401).json({
+        message: "foodpartner not found",
+      });
+    }
 
+    req.foodpartner = foodpartner;
+    next();
 
   } catch (error) {
     return res.status(400).json({
-      messsage: "invalid token",
+      message: "invalid token",
     });
   }
 }
 
-
-module.exports = {authfoodpartnermiddleware}
+module.exports = { authfoodpartnermiddleware };
