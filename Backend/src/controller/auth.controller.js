@@ -26,7 +26,6 @@ const registeruser = async (req, res) => {
     }
 
     const hashedpassword = await bcrypt.hash(password, 10);
-    console.log(hashedpassword);
 
     const user = await registerusermodel.create({
       fullneam,
@@ -153,7 +152,6 @@ async function loginfoodpartner(req, res) {
 
   try {
     
-
   const { email, password } = req.body;
 
   const user = await foodpartnermodel.findOne({
@@ -165,6 +163,7 @@ async function loginfoodpartner(req, res) {
       message: "email password is invalid",
     });
   }
+
 
   const ispasswordismatched = await bcrypt.compare(password, user.password);
 
@@ -183,21 +182,19 @@ async function loginfoodpartner(req, res) {
 
   res.cookie("token", token);
 
-
   res.status(200).json({
-  message: "foodpartner login successful",
-  foodpartner: {
-    id: user._id,
-    email: user.email,
-    fullneam: user.fullneam
-  }
-});
+    message: "foodpartner login successful",
+    foodpartner: {
+      id: user._id,
+      email: user.email,
+      fullneam: user.fullneam
+    }
+  });
 
   } catch (error) {
     console.log(error)
   }
 }
-
 // foodpartner   logout api
 
 async function logoutfoodpartner(req, res) {

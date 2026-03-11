@@ -1,6 +1,5 @@
 const mongoose = require('mongoose')
 
-
 const foodpartnerschema = new mongoose.Schema({
   fullneam: {
     type: String,
@@ -11,14 +10,12 @@ const foodpartnerschema = new mongoose.Schema({
     required: true,
     unique: true
   },
-  fullneam: {
+  password: {
     type: String,
     required: true
   }
 })
 
-
 const foodpartnermodel = mongoose.model("food-partner", foodpartnerschema)
 
 module.exports = foodpartnermodel
-
