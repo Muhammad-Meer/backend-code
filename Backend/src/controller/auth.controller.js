@@ -44,11 +44,13 @@ const jwt = require('jsonwebtoken');
   return res.status(201).json({
     message: "user create successfully",
     fullname: user.fullname,
-    email: user.email
+    email: user.email,
+    user
   })
 
 } catch (error) {
   console.log("server error")
-}
+}}
 
-}
+
+module.exports = {registeruser}
