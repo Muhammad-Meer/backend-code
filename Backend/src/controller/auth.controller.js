@@ -36,7 +36,7 @@ const jwt = require('jsonwebtoken');
 
   const token = jwt.sign({
     id: user._id,
-  }, process.env.SECRET)
+  }, process.env.SECRET, {expiresIn : "5d"})
 
   res.cookie("token" , token)
   
