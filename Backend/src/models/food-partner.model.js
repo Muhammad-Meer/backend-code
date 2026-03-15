@@ -1,13 +1,10 @@
-const mongoose = require('mongoose')
-
-
+const mongoose = require('mongoose');
 
 const foodpartnerschema = mongoose.Schema({
   fullname: {
     type: String,
     required: true
   },
-  
   email: {
     type: String,
     required: true,
@@ -15,17 +12,12 @@ const foodpartnerschema = mongoose.Schema({
   },
   password: {
     type: String,
-    require: true,
     required: true
-  },
+  }
+}, {
+  timestamps: true
+});
 
-},
-{
-     timestamps: true}
-)
+const foodpartnermodel = mongoose.model("foodpartner", foodpartnerschema);
 
-
-const foodpartnermodel = mongoose.model("foodpartner", foodpartnerschema)
-
-module.exports = foodpartnermodel
-
+module.exports = foodpartnermodel;

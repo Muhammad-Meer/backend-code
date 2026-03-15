@@ -13,9 +13,9 @@ router.post('/user/loogout', authcontroller.loogoutuser)
 // foodpartner api 
 
 
-router.post('/user/register', authcontroller.registerfoodpartner)
-router.post('/user/login', authcontroller.loginfoodpartner)
-router.post('/user/loogout', authcontroller.loogoutfoodpartner)
+router.post('/food-partner/register', authcontroller.registerfoodpartner)
+router.post('/food-partner/login', authcontroller.loginfoodpartner)
+router.post('/food-partner/loogout', authcontroller.loogoutfoodpartner)
 
 
 
