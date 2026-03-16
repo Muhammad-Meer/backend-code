@@ -110,27 +110,19 @@ function loogoutuser(req, res) {
 
 async function registerfoodpartner(req, res) {
   try {
-    console.log("REQ BODY:", req.body);
+    const {fullname , email , password} = req.body
 
-    const { fullname, email, password } = req.body || {};
 
-    if (!fullname || !email || !password) {
-      return res.status(400).json({
-        message: "all fields are required"
-      });
-    }
-
-    const isUserAlreadyExists = await foodpartnermodel.findOne({
+     const isUserAlreadyExists = await foodpartnermodel.findOne({
       email
     });
 
-    if (isUserAlreadyExists) {
+    if(isUserAlreadyExists) {
       return res.status(400).json({
-        message: "account is alredy exist"
-      });
+        message: "foodpartner is already is exist"
+      })
     }
-
-    const hashedpassword = await bcrypt.hash(password, 10);
+        const hashedpassword = await bcrypt.hash(password, 10);
 
     const user = await foodpartnermodel.create({
       fullname,
@@ -144,7 +136,7 @@ async function registerfoodpartner(req, res) {
       { expiresIn: "5d" }
     );
 
-    res.cookie("token", token);
+        res.cookie("token", token);
 
     return res.status(201).json({
       message: "foodpartner create successfully",
@@ -152,6 +144,7 @@ async function registerfoodpartner(req, res) {
       email: user.email,
       user
     });
+
 
   } catch (error) {
     console.log(error);
