@@ -1,20 +1,26 @@
-const foodpartner = require('../models/food.model')
-const jwt = require('jsonwebtoken')
+const foodpartnermodel = require("../models/food-partner.model");
+const jwt = require("jsonwebtoken");
 
+async function authmiddleware(req, res, next) {
+  const token = req.body;
 
-async function authmiddleware(req , res , next) {
-    
-    const token = req.body
-
-  if(!token) {
-    return res.status(400).json({
-      message: "not access crete food"
-    })
+  if (!token) {
+    return res.status(401).json({
+      message: "plese login foodpartner",
+    });
   }
-    try {
+  try {
+    const decoded = jwt.verify(token, process.env.SECRET);
 
-      jwt.verify(token, process.env.)
-    } catch (error) {
-    console.log(error)
+    const foodpartner = await foodpartnermodel.findById(decoded.id);
+
+    req.foodpartner = foodpartner;
+
+     next()
+  } catch (error) {
+    console.log(error);
+    res.status(401).json({
+      message: "invalid token ",
+    });
   }
 }
