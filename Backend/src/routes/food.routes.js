@@ -1,3 +1,5 @@
+const createfood = require('../controller/food.controller')
+
 const express = require('express')
 const router = express.Router()
 
@@ -5,5 +7,5 @@ const router = express.Router()
 
 // api food
 
-router.post('/')
+router.post('/', createfood.createfood)
 module.exports = router
